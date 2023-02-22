@@ -8,7 +8,7 @@
   "description": "",
   "scripts": {
     "start": "serverless offline start",
-    "deploy": "sls deploy --aws-profile antre --stage prod --verbose",
+    "deploy": "sls deploy --aws-profile target_name --stage prod --verbose",
     "build": "sls package"
   },
   "dependencies": {

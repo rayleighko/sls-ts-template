@@ -1,4 +1,4 @@
-service: antre-pdf-generator
+service: sls-ts-template
 
 package:
   individually: true
