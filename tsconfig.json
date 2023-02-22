@@ -1,0 +1,48 @@
+{
+  "lib": [
+    "es2017",
+    "es"
+  ],
+  "compilerOptions": {
+    "removeComments": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "outDir": "lib",
+    "baseUrl": ".",
+    "experimentalDecorators": true, /* Enables experimental support for ES7 decorators. */
+    "emitDecoratorMetadata": true, /* Enables experimental support for emitting type metadata for decorators. */
+    // 추가된 부분 START
+    "paths": {
+      "@api/*": [
+        "api/*"
+      ],
+      "@model/*": [
+        "model/*"
+      ],
+      "@service/*": [
+        "service/*"
+      ],
+      "@util/*": [
+        "util/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
+      "@test/*": [
+        "test/*"
+      ]
+    }
+    //추가된 부분 END
+  },
+  "exclude": [
+    "node_modules/**/*",
+    ".serverless/**/*",
+    ".webpack/**/*",
+    "_warmup/**/*",
+    ".vscode/**/*"
+  ]
+}

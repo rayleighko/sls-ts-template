@@ -1,0 +1,84 @@
+service: antre-pdf-generator
+
+package:
+  individually: true
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+  serverless-offline:
+    useChildProcesses: true
+    noPrependStageInUrl: true
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+provider: 
+  name: aws
+  runtime: nodejs14.x
+  region: ap-northeast-2
+  stage: ${opt:stage, 'prod'}
+  timeout: 30
+  apiGateway: 
+    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+    shouldStartNameWithService: true
+    binaryMediaTypes:
+      - '*/*'
+  tracing:
+    apiGateway: true
+    lambda: true
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    STAGE: ${self:provider.stage}
+  # iam:
+  #   role:
+  #     statements:
+  #       - Effect: Allow
+  #         Action:
+  #           - 's3:GetObject'
+  #         Resource:
+  #           - 'arn:aws:s3:::{bucket-name}/*'
+  #       - Effect: Allow
+  #         Action:
+  #           - 's3:PutObject'
+  #         Resource:
+  #           - 'arn:aws:s3:::{bucket-name}/*'
+
+functions:
+  action1_target:
+    handler: api/target.action1
+    events:
+      - http:
+          method: post
+          path: target/action1
+          cors: true
+  action2_target:
+    handler: api/target.action2
+    events:
+      - http:
+          method: post
+          path: target/action2
+          cors: true
+
+resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: "AWS::ApiGateway::GatewayResponse"
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: "ApiGatewayRestApi"
+    GatewayResponseDefault5XX:
+      Type: "AWS::ApiGateway::GatewayResponse"
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_5XX
+        RestApiId:
+          Ref: "ApiGatewayRestApi"

@@ -1,0 +1,18 @@
+**/*.js
+node_modules/
+# Allowlist 'test.js' in the '.build' folder
+# But do not allow anything else in the '.build' folder to be linted
+!.build
+.build/*
+!.build/test.js
+!.next
+.next/*
+!.next/test.js
+*/**/*.spec.ts
+*/**/*.spec.tsx
+*/**/*.test.ts
+*/**/*.test.tsx
+*/**/*.ejs
+coverage
+.eslintrc.js
+.babel.config.js
